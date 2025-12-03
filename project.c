@@ -24,7 +24,6 @@ typedef struct {
 
 void menu ();
 void wait ();
-int isEmpty (char s[]);
 void roomAdd (Room rooms[], int *n);
 int checkRoomIdExist (Room rooms[], int n, char roomID[]);
 void updateRoom(Room rooms[], int n);
@@ -190,7 +189,7 @@ void roomAdd (Room rooms[], int *n) {
 	    printf("\nNhap so phong (toi da 4 ky tu): ");
 	    fflush(stdin);
 	    fgets(roomId, sizeof(roomId), stdin);
-	    roomId[strcspn(roomId, "\n")] = 0;
+	    roomId[strcspn(roomId, "\n")] = '\0';
 	    if (!checkInput(roomId, "So phong")) {
 	    	continue;
 		}
@@ -436,12 +435,18 @@ void roomShow(Room rooms[], int n) {
     while (1) {
         system("cls");
 
-        if (page < 0) page = 0;
-        if (page >= totalPages) page = totalPages - 1;
+        if (page < 0) {
+        	page = 0;
+		}
+        if (page >= totalPages) {
+        	page = totalPages - 1;
+		}
 
         start = page * pageSize;
         end = start + pageSize;
-        if (end > n) end = n;
+        if (end > n) {
+        	end = n;
+		}
 
         printf("============= DANH SACH PHONG (Trang %d/%d) ==============\n", page + 1, totalPages);
         printf("|%-10s | %-10s | %-10s | %-15s|\n", "RoomID", "Type", "Price", "Status");
@@ -449,9 +454,15 @@ void roomShow(Room rooms[], int n) {
 
         for (int i = start; i < end; i++) {
             char *statusText;
-            if (rooms[i].status == 0) statusText = "Trong";
-            else if (rooms[i].status == 1) statusText = "Dang o";
-            else statusText = "Bao tri";
+            if (rooms[i].status == 0) {
+            	statusText = "Trong";
+			}
+            else if (rooms[i].status == 1) {
+            	statusText = "Dang o";
+			}
+            else {
+            	statusText = "Bao tri";
+			}
 
             printf("|%-10s | %-10d | %-10.2lf | %-15s|\n",
                    rooms[i].roomId,
@@ -465,9 +476,15 @@ void roomShow(Room rooms[], int n) {
         printf("\nNhap lua chon: ");
 
         char c = getch();
-        if (c == 27) break; 
-        else if (c == 'n') page++; 
-        else if (c == 'p') page--;
+        if (c == 27) {
+        	break; 
+		}
+        else if (c == 'n')  {
+			page++;
+		} 
+        else if (c == 'p') {
+			page--;
+		}
         else if (c == 's') { 
             int inputPage = 0;
             int digits = 0;
@@ -743,9 +760,13 @@ int isValidDate(char date[]) {
         return 0;
     }
 
-    if (y < 1900 || y > 2100) return 0;
+    if (y < 1900 || y > 2100) {
+    	return 0;
+	}
 
-    if (m < 1 || m > 12) return 0;
+    if (m < 1 || m > 12) {
+    	return 0;
+	}
 
     int daysInMonth[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};
 
@@ -765,7 +786,6 @@ int isOnlySpaces(char *s) {
     }
     return 1; 
 }
-
 
 
 
